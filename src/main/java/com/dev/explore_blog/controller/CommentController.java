@@ -2,6 +2,8 @@ package com.dev.explore_blog.controller;
 
 import com.dev.explore_blog.payload.CommentDto;
 import com.dev.explore_blog.service.CommentService;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +11,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/comment")
+@RequestMapping("exploreBlog/comment")
+@Tag(
+        name = "Rest APIs for Comments"
+)
 public class CommentController {
 
     private final CommentService commentService;
@@ -20,7 +25,7 @@ public class CommentController {
 
     @PostMapping("/add/{postId}")
     public ResponseEntity<CommentDto> createComment(@PathVariable("postId") Long postId,
-                                                    @RequestBody CommentDto commentDto) {
+                                                    @Valid @RequestBody CommentDto commentDto) {
         return new ResponseEntity<>(commentService.createComment(postId, commentDto), HttpStatus.CREATED);
     }
 
@@ -39,16 +44,16 @@ public class CommentController {
     @PutMapping("update/post/{postId}/comment/{commentId}")
     public ResponseEntity<CommentDto> editCommentsById(@PathVariable("commentId") Long commentId,
                                                        @PathVariable("postId") Long postId,
-                                                       @RequestBody CommentDto editedComment) {
+                                                       @Valid @RequestBody CommentDto editedComment) {
         CommentDto commentDto = commentService.editByCommentId(commentId, postId, editedComment);
         return new ResponseEntity<>(commentDto, HttpStatus.OK);
     }
 
     @DeleteMapping("delete/post/{postId}/comment/{commentId}")
     public ResponseEntity<String> deleteCommentsById(@PathVariable("commentId") Long commentId,
-                                                       @PathVariable("postId") Long postId) {
+                                                     @PathVariable("postId") Long postId) {
         commentService.deleteByCommentId(commentId, postId);
-        return new ResponseEntity<>("Comment deleted Successfully",HttpStatus.OK);
+        return new ResponseEntity<>("Comment deleted Successfully", HttpStatus.OK);
     }
 
 }

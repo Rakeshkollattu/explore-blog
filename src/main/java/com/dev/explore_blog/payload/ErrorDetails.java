@@ -1,5 +1,6 @@
 package com.dev.explore_blog.payload;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(description = "Error Details Information")
 public class ErrorDetails {
 
     private Date timestamp;

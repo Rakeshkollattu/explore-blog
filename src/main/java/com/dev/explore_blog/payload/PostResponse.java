@@ -1,5 +1,6 @@
 package com.dev.explore_blog.payload;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Schema(description = "Paginated Posts Information")
 public class PostResponse {
 
     private List<PostDto> content;
